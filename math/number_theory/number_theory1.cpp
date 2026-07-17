@@ -4,9 +4,6 @@ using namespace std;
 //take care: 
 #define int long long ///////////////important ,, but take care of comparisons, for ex: min(x,0LL)
 
-const char* yes = "YES\n";
-const char* no = "NO\n";
-
 bool is_prime(int n){
     bool ok = true;
     for(int i = 2 ; i*i <= n; i++){
@@ -104,12 +101,12 @@ vector<bool> sieve(int n){
 vector<int>prime_divisors;//making it global to be seen by the both functions
 
 //prime factorization with sieve:
-void sieve(int n){
+void sieve_with_factorization(int n){
     
     //we want to store only one prime divisor for every number and if prime store itself
     //then to factorize it , divide it by current prime divisor 
             // and then you get a number then divide it by its prime divisor ... till you reach one
-                    //complexity is O(  )
+                    //complexity is O( nloglogn ) also
     prime_divisors.assign(n+1,0);//0 and 1 are zeros here
     
     vector<int>isprime(n+1,true);//fix 1, 3 : initalize with true not false, vector of ints not of bools
@@ -146,7 +143,23 @@ vector<int>prime_divisors_for(int x){
 }
 
 
+#define add_mod(a,b,m) ( ( (a%m)+(b%m) +m )% m ) 
+#define sub_mod(a,b,m) ( ( (a%m)-(b%m) +m )% m )
+#define mul_mod(a,b,m) ( ( (a*m)+(b*m) +m )% m )
 
+
+constexpr double EPS = 1e-9;
+constexpr int INF = 1 << 30, Mod = 1e9 + 7;
+constexpr long long LINF = 1LL << 62;
+const char* yes = "YES\n";
+const char* no  =  "NO\n";
+
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x << ": " << (x) << "\n";
+#else
+#define debug(x)
+#endif
 
 // int mod=1e9+7; 
 // //using prime why in making answer smaller?? 
@@ -167,6 +180,10 @@ void solve(const int& t){
     //dbg:
     // cerr<< "\ntest case no." << t << " debugging : \n";
     //end_dbg
+    
+    //if the output is very large don't forget to make this as comment : freop("out.txt","w",stdout); 
+    // to avoid program crashing
+    
     
     
     
