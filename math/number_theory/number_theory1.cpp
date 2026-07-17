@@ -138,10 +138,46 @@ vector<int>prime_divisors_for(int x){
         prime_factors.push_back(cur_prime_divisor);
         x/=cur_prime_divisor;
     }
-    
+     
     return prime_factors;
 }
 
+
+//precomputation : divisors for all numbers from 1 to n
+//how it works? : 
+    // for each number from 1 to n : 
+        //  reach each number mutliples and increase the number of divisors
+vector<int>divisors;
+void cnt_divisors_1toN(int n){
+    divisors.assign(n+1,0);
+    for(int i = 1 ; i<=n ; i++){
+        for(int j = i; j<=n ; j+=i){
+            divisors[j]++;
+        }
+    }
+} //complexity : O(nlogn) ,, also the inside loop was not counted because it is a small constant :
+
+//you have n*(1+1/2+1/3+1/4........) which means complexity is n times the inner complexity which is ln or (logn)
+// 1+1/2+1/3+1/4+...... which is the harmonic series
+// approximately the summation is ln(n)    (approximately)   
+                    //  even it diverges to infinity but because you are not counting inifinity numbers, you have a limit
+
+
+//to calculate number of divisors you can find primefactorization for the number
+    // then find each prime factor occurence
+            // for example 24 = 2*2*2 * 3  = 2 pow 3  * 3 pow 1
+                //to find them which are "1, 2, 3, 4, 6, 8, 12, 24" (8 divisors)
+            // you can muliplty each power+1 into each other , see:
+            // for the (24) : 2 pow 3  *  3 pow 1  , so the powers are 3,1
+            // so do : (3+1) * (1+1)   ,, the +1 is because if the number was not taken (power zero)
+                //which gives the correct answer of 24
+    //another example for 2pow1 * 3pow1 which is 2*3=6
+    //you have 4 divisors which are "1, 2, 3, 6"
+    //powers:1,1 so ans=(1+1) * (1+1) =4
+
+
+//note that:
+//the least number of divisors for any number is 2 when the number is prime
 
 #define add_mod(a,b,m) ( ( (a%m)+(b%m) +m )% m ) 
 #define sub_mod(a,b,m) ( ( (a%m)-(b%m) +m )% m )
@@ -169,7 +205,30 @@ const char* no  =  "NO\n";
 
 
 
+/*
+functions you have tell now here :
 
+to precompute number of divisors for range of numbers*******
+void (cnt_divisors_1toN)  ===>> use with the global vector (divisors)
+
+
+to have a vector of prime factors for any number*******
+void (sieve_with_factorization) ===>> with the global vector(prime_divisors)   ,, complexity : nloglogn
+then
+vector<int> (prime_divisors_for) ==>   ,, complexity : logn
+
+
+to precompute isprime or not*******
+vector<int> sieve  ====>>    ,, complexity : nloglogn 
+
+
+
+
+
+
+and also some basic functions at the beginning
+
+*/
 
 
 //don't forget pre processing is not processed each time
@@ -184,7 +243,8 @@ void solve(const int& t){
     //if the output is very large don't forget to make this as comment : freop("out.txt","w",stdout); 
     // to avoid program crashing
     
-    
+    cnt_divisors_1toN(1000);
+    cout<<divisors[1000];
     
     
     
