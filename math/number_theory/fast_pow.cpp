@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int mod=1e9+7; //don't forget it 
+
 int fastpow(int n,int m){ //when you want to use it: for ex: cout<<(n%mod,m);  (don't forget mod) 
 //==>> result must be lower than mod 
 // /or/ 
