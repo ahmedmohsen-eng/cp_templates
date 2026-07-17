@@ -249,9 +249,10 @@ void solve(const int& t){
     
     //if the output is very large don't forget to make this as comment : freop("out.txt","w",stdout); 
     // to avoid program crashing
-    
-    cnt_divisors_1toN(1000);
-    cout<<divisors[1000];
+
+    //for ex:
+    //cnt_divisors_1toN(1000);
+    //cout<<divisors[1000];
     
     
     
