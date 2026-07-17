@@ -15,7 +15,9 @@ bool is_prime(int n){
     return ok;
 }
 
-
+// basic functions : factors,no_divisors
+// the first one to calculate number of ((prime)) factors
+// the second one is to calculate number of divisors
 vector<int>factors;
 void prime_factor(int n){
     for(int i = 2; i*i<=n ;i++){
