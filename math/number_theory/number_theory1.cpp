@@ -282,23 +282,29 @@ void solve(const int& t){
     // cerr<< "\ntest case no." << t << " debugging : \n";
     //end_dbg
     
+    //take care:
     //if the output is very large don't forget to make this as comment : freop("out.txt","w",stdout); 
-    // to avoid program crashing
-
+                                                            // to avoid program crashing
+    //take care of vector type definiation when passing to a specific function
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //fixed : 
     //when i say prime divisors that is a small mistake , i mean prime factors!!!!!!!!!!!!!!!
     //don't forget +1 in functions to handle the limit number itself
     //recopy it to github and current files
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
