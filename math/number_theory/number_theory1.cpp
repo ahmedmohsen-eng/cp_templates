@@ -205,6 +205,23 @@ const char* no  =  "NO\n";
 //                  but why does this matter if right?? 
 // or what??
 
+int mod=1e9+7; //don't forget this : you can change it to be used in the function
+int fastpow(int n,int m){ //when you want to use it: for ex: cout<<(n%mod,m);  (don't forget mod) 
+//==>> result must be lower than mod 
+// /or/ 
+//  he tells you that you must print ans % mod 
+    if(m==0) return 1;
+    
+    
+    int ans=fastpow(n,m/2)%mod;
+    ans=(ans*ans)%mod;
+    
+    if(m&1) ans=(ans*n)%mod;
+    
+    return ans;
+    
+}
+
 
 
 /* 
@@ -215,17 +232,19 @@ __________________________________________________________________
 ________________________________________________
 functions you have tell now here :
 
-to precompute number of divisors for range of numbers*******
+1-to precompute number of divisors for range of numbers*******
 void (cnt_divisors_1toN)  ===>> use with the global vector (divisors)
 
 
-to have a vector of prime factors for any number*******
-void (sieve_with_factorization) ===>> with the global vector(prime_divisors)   ,, complexity : nloglogn
+2-to have a vector of prime factors for any number*******
+void (sieve_with_factorization) ===>>
+         with the global vector(prime_divisors) to store one prime divisor (here: the smallest) for each number
+                                                                                       ,, complexity : nloglogn
 then
 vector<int> (prime_divisors_for) ==>   ,, complexity : logn
 
 
-to precompute isprime or not*******
+3-to precompute isprime or not*******
 vector<int> sieve  ====>>    ,, complexity : nloglogn 
 
 
@@ -235,7 +254,13 @@ vector<int> sieve  ====>>    ,, complexity : nloglogn
 
 and also some basic functions at the beginning
 
+
 */
+
+
+
+
+
 
 
 //don't forget pre processing is not processed each time
@@ -250,9 +275,7 @@ void solve(const int& t){
     //if the output is very large don't forget to make this as comment : freop("out.txt","w",stdout); 
     // to avoid program crashing
 
-    //for ex:
-    //cnt_divisors_1toN(1000);
-    //cout<<divisors[1000];
+    
     
     
     
