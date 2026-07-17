@@ -261,17 +261,19 @@ vector<int> (prime_factors_for) ==>   ,, complexity : logn
 3-to precompute isprime or not*******
 vector<int> sieve  ====>>    ,, complexity : nloglogn 
 
+4-and may be other functions like :    fastpow
 
-and also some basic functions at the beginning
+5-and also some basic functions at the beginning like : 
+    prime_factors_basic with type vector<int>
+    no_divisors_basic   with type int (take care if #define int long long ==> is it used or no)
 
-and may be other functions like :    fastpow
 */
 
 
 
 
 
-
+//(take care if #define int long long ==> is it used or no)
 
 //don't forget pre processing is not processed each time
 
