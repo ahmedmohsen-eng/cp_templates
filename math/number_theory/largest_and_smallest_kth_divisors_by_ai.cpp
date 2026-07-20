@@ -1,3 +1,5 @@
+//complexity : sqrt(n) for both time and memory
+
 // Returns the k-th smallest divisor of n (1-indexed).
 // Returns -1 if k > number of divisors.
 long long kthSmallestDivisor(long long n, long long k) {
