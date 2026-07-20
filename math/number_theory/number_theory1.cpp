@@ -179,13 +179,29 @@ void cnt_divisors_1toN(int n){
     //you have 4 divisors which are "1, 2, 3, 6"
     //powers:1,1 so ans=(1+1) * (1+1) =4
 
-
-//note that:
+// notes : 
+// note that :
 //the least number of divisors for any number is 2 when the number is prime
+
+//the least divisor of any number is a prime
+
+//the only even prime is 2
+
+//To factorize n, it is sufficient to check divisors only up to sqrt(n) ,, if not found any divisors so it is a prime
 
 //any number has even number of divisors if not complete square, but odd if it is a complete square
 
-//to have 3 divisors only, two of them is 1,and the number itself
+//to have 3 divisors only, two of them are : 1,and the number itself and the third is its sqrt    
+
+
+
+//After dividing out all such factors, if n > 1, then the remaining n must be prime. 
+//Otherwise, if it were composite, it would have a prime factor <= sqrt(remaining n) <= sqrt(original n), which would have already been removed.
+
+// Also, a composite number cannot have both factors greater than sqrt(n),
+// because if a > sqrt(n) and b > sqrt(n), then a * b > sqrt(n) * sqrt(n) so it is bigger than n itself, which is impossible.
+
+
 
 
 #define add_mod(a,b,m) ( ( (a%m)+(b%m) +m )% m ) 
