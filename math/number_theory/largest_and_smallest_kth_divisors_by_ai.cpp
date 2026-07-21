@@ -1,4 +1,4 @@
-//complexity : sqrt(n) for both time and memory
+//both functions complexities : sqrt(n) for both time and memory
 
 // Returns the k-th smallest divisor of n (1-indexed).
 // Returns -1 if k > number of divisors.
