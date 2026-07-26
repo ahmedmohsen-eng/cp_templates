@@ -23,7 +23,7 @@ using namespace std;
 //and we have gcd(a,0)=a
 
 
-// 
+// bezout's thereom : ax+by=gcd(a,b) ,,,,,,, x,y are achieveable ! and that is the theorem ! ...but why is it true?? 
 
 //
 
