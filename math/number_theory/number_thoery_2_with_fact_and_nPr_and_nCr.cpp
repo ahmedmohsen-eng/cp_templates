@@ -298,7 +298,39 @@ void build_fact_and_fact_inv(int mod=1'000'000'007){
         inv_fact[i]=mod_inverse(fact[i],mod);
     }
 }
+/* another way for building the factorials with inverse factorials       with only complexity of n instead of log n
+the previous one takes logn because using fastpow inside mod inverse in each one which is not necessary
+you can calculate it in O(N):
 
+note that mod mulitplicate inverse behaves exactly as the mulitplicative inverse but in the mod system
+//so ::::
+fact[i] = fact[i-1] * i
+fact[i] / i = fact[i-1]
+so   fact[i-1]=fact[i]/i
+so 1/fact[i-1]=i/fact[i]
+so mod inverse for fact[i-1] is i/fact[i]
+
+code for it:
+//
+void build_fact_and_fact_inv(int mod=1'000'000'007){
+    fact[0]=fact[1]=1;
+    inv_fact[0]=inv_fact[1]=1;///1 here is the value for mod_inverse(1,mod);
+    
+    ///////take care:::::********************
+    // Safe because:
+    // 1) mod is prime.
+    // 2) N < mod.
+    
+    for(int i = 2 ; i<= N ; i++){
+        fact[i]=mod_mul(fact[i-1],i,mod);
+        inv_fact[i]=mod_inverse(fact[i],mod);
+    }
+}
+
+
+
+
+  */
 
 //counting basics: 
 ////nPr : n! /  (n-r!)
