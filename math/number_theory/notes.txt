@@ -1,0 +1,21 @@
+when complexity is lcm(x,y) and x,y <=n then the biggest complexity (big o notation) is lcm(n-1,n)
+this is because the lcm is product/gcd
+so if there are two values with the maximum (product/gcd) it is the complexity
+and it is known that two consecutive number gcd is 1                 :        gcd(n,n−1)=gcd(n−(n−1),n−1)=gcd(1,n−1)=1.
+so the greatest two consecutive numbers has the greatest lcm
+why not n,n ,,,,,,,,,,because     lcm of n,n is n ,,,,,,,,,,,while lcm of n,n-1 is product / 1       and this product>=n 
+                                                                                n <= (n*(n-1)) because:
+                                                                                n<=n^2-n
+                                                                                2n<=n^2     which is true for n>1     ,, may be proved using induction or something like that
+
+
+
+
+
+
+
+
+
+
+..
+                                                                                  
