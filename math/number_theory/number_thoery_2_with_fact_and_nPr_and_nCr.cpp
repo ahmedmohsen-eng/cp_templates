@@ -308,29 +308,38 @@ fact[i] = fact[i-1] * i
 fact[i] / i = fact[i-1]
 so   fact[i-1]=fact[i]/i
 so 1/fact[i-1]=i/fact[i]
-so mod inverse for fact[i-1] is i/fact[i]
+    inv_fact[i-1]=inv_fact[i]*i
+so mod inverse for inv_fact[i-1] is :  inv_fact[i] * i
 
 code for it:
 //
-void build_fact_and_fact_inv(int mod=1'000'000'007){
-    fact[0]=fact[1]=1;
-    inv_fact[0]=inv_fact[1]=1;///1 here is the value for mod_inverse(1,mod);
-    
-    ///////take care:::::********************
-    // Safe because:
-    // 1) mod is prime.
-    // 2) N < mod.
-    
-    for(int i = 2 ; i<= N ; i++){
-        fact[i]=mod_mul(fact[i-1],i,mod);
-        inv_fact[i]=mod_inverse(fact[i],mod);
+
+void build_fact_and_fact_inv(int mod = 1'000'000'007){
+
+    fact[0] = 1;
+
+    // calculate factorials
+    for(int i = 1; i <= N; i++){
+        fact[i] = mod_mul(fact[i-1], i, mod);
+    }
+
+    // calculate only one modular inverse
+    inv_fact[N] = mod_inverse(fact[N], mod);
+
+    // calculate the rest backwards
+    for(int i = N; i >= 1; i--){
+        inv_fact[i-1] = mod_mul(inv_fact[i], i, mod);
     }
 }
 
 
-
-
   */
+
+
+
+
+
+
 
 //counting basics: 
 ////nPr : n! /  (n-r!)
