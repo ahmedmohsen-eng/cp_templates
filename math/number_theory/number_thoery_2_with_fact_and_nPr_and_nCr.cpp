@@ -154,9 +154,9 @@ int mod_add(int a, int b,int mod=1'000'000'007){
 int mod_sub(int a, int b,int mod=1'000'000'007){
     return (((a%mod+mod)-(b%mod+mod))+mod)%mod;
 }
-int mod_mul(int a, int b,int mod=1'000'000'007){
-    __int128 ans= ((a%mod+mod)*(b%mod+mod))%mod;
-    return ans;//even it is __128int ,,==>> it is returned with function type
+int mod_mul(int a, int b, int mod=1'000'000'007){
+    __int128 ans= (__int128)   (a%mod+mod) *  (b%mod+mod ) % mod;//////fix : assigning it to __int128 before calculating to avoid smaller internal calculatino ranges before converting to __int128
+    return ans;//even it is __128int ,,==>> it is returned with function type with value fits in range of int as the %
 }
 
 
