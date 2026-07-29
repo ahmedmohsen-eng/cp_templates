@@ -19,3 +19,7 @@ why not n,n ,,,,,,,,,,because     lcm of n,n is n ,,,,,,,,,,,while lcm of n,n-1 
 
 ..
                                                                                   
+it you have x=2^a1 x 3^b1 x 5^c1 , y=2^a2 x 3^b2 x 5^c2
+then lcm (x,y)= 2^max(a1,a2) x 3^max(b1,b2) x 5^max(c1,c2)
+and so on
+
