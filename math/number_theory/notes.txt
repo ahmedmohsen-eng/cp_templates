@@ -23,3 +23,10 @@ it you have x=2^a1 x 3^b1 x 5^c1 , y=2^a2 x 3^b2 x 5^c2
 then lcm (x,y)= 2^max(a1,a2) x 3^max(b1,b2) x 5^max(c1,c2)
 and so on
 
+
+
+lcm of coprimes number a,b is a*b
+
+
+
+
