@@ -36,7 +36,7 @@ struct cmp{
 
 int N=2e5+5;
 vector<vector<node>>adj(N);
-vector<bool>vis(N,false);
+//vector<bool>vis(N,false);
 vector<int>parent(N,-1);
 
 vector<int>dis(N,1e18);
@@ -55,8 +55,10 @@ int dijkstra (int src, int target){
 		
 		if(u.idx==target)return u.cost;
 		
-		if(vis[u.idx]) continue;
-		vis[u.idx]=true;
+		//if(vis[u.idx]) continue;
+		//vis[u.idx]=true;
+		if(u.cost > dis[u.idx]) continue;
+		
 		parent[u.idx]=u.par;
 		
 		for(auto&v:adj[u.idx]){
@@ -78,7 +80,7 @@ int dijkstra (int src, int target){
 void graph_clear(int n){
 	for(int i = 1 ; i <= n; i++){
 		adj[i].clear();
-		vis[i]=false;
+		//vis[i]=false;
 		parent[i]=-1;
 		
 		dis[i]=1e18;////////
@@ -89,11 +91,11 @@ void solve(int tc){
 	// //dbg:
 	 // cerr<<"at the test case no."<<tc<<" : \n";
 	
-	graph_clear(n);
-	
 	int src,target;
 	// cin>>n>>m>>src>>target;
 	cin>>n>>m; src=1,target=n;
+	
+	graph_clear(n);
 	
 	for(int i = 1 ,u,v,w ; i<=m ;i++){
 		cin>>u>>v>>w;
