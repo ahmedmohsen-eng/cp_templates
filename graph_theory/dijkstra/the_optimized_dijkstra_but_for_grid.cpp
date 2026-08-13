@@ -1,19 +1,3 @@
-// Optimization: Only push to priority queue when a strictly shorter path is found (dis[u] + cost < dis[v]).
-
-// Old approach (!vis check only):
-// - Complexity: O((E + V) log E)
-// - Space Complexity: O(E)
-
-// Current approach (dis check):
-// - Complexity: O((E + V) log V)
-// - Space Complexity: O(V) in practice
-
-// Note: This optimization shines most on dense graphs (large E),  
-                        // where it prevents flooding the priority queue with redundant path updates, saving both memory and runtime.
-
-
-
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -22,11 +6,35 @@ bool multicases_=false;
 
 #define int long long
 
-
+struct point {
+	int x,y;
+};
 
 struct node{
-	int idx,cost;//
+	int x,y,cost;//
 };
+
+
+
+vector<int>dx = {-1, 1, 0, 0};
+vector<int>dy = {0, 0, -1, 1};
+/*
+vector<int> dx = {-1, 1, 0, 0, -1, -1, 1, 1};
+vector<int> dy = {0, 0, -1, 1, -1, 1, -1, 1};
+
+/*
+//if diagonal has extra cost:
+const double diagonal_bonus = sqrt(2.0); // ~1.41421356
+vector<int> diagonal_cost = {0, 0, 0, 0, diagonal_bonus, diagonal_bonus, diagonal_bonus, diagonal_bonus};
+
+*/
+
+
+
+*/
+
+
+
 
 struct cmp{
 	bool operator()(node&a,node&b){
@@ -34,43 +42,80 @@ struct cmp{
 	}
 };
 
-int N=2e5+5;
-vector<vector<node>>adj(N);
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////take care here : what is the maximum rows and columns????????
+	///is it good or some test cases with larger rows and fewer columns (and vice versa) ?????????
+int Nx=5e3+5;
+int Ny=5e3+5;
+vector<vector<int>>grid(Nx,vector<int>(Ny,0));
 //vector<bool>vis(N,false);
-vector<int>parent(N,-1);
+vector<vector<point>>parent(Nx,vector<point>(Ny,{-1,-1});
 
-vector<int>dis(N,1e18);
+vector<vector<int>>dis(Nx,vector<int>(Ny,1e18));
 
-int n,m;
+/*
+vector<vector<int>> grid;
+vector<vector<point>> parent;
+vector<vector<int>> dis;
+*/
 
-int dijkstra (int src, int target){
+
+
+
+
+
+int R,C;
+
+// Helper to validate boundary limits
+bool isvalid(int row, int col) {
+	return (row >= 1 && row <= R && col >= 1 && col <= C);
+}
+
+int dijkstra (point src, point target){
 	priority_queue<node,vector<node>,cmp>pq;
 	
-	dis[src]=0;////////////////
-	pq.push({src,0});
+	dis[src.x][src.y]=0;////////////////
+	pq.push({src.x,src.y,0});
 	
 	while(!pq.empty()){
 		node u = pq.top();
 		pq.pop();
 
-		if(u.cost > dis[u.idx]) continue;
+		if(u.cost > dis[u.x][u.y]) continue;
 		
-		if(u.idx==target)return u.cost;
+		if(u.x==target.x&&u.y==target.y)return u.cost;
 		
 		//if(vis[u.idx]) continue;
 		//vis[u.idx]=true;
 		
-		
-		for(auto&v:adj[u.idx]){
-			int newDist = u.cost + v.cost;
-			if(newDist<dis[v.idx]){
+		for(int i = 0 ;i < (int)dx.size ; i ++){
+			int nx=u.x+dx[i];
+			int ny=u.y+dy[i];
+
+			if(isvalid(nx,ny)){
+				int edgeCost = grid[nx][ny];
+				int newDist = u.cost + edgeCost;
 				
-				dis[v.idx]=newDist;///////
+				//////// if there  is a diagonal cost if 8 movement directions allowed 
+				// int edgeCost = grid[nx][ny] + diagonal_cost[i];
 				
-				parent[v.idx]=u.idx;
-				pq.push({v.idx,newDist});
-				
+				if(newDist<dis[nx][ny]){
+					dis[nx][ny]=newDist;
+					parent[nx][ny]={u.x,u.y};
+					pq.push({nx,ny,newDist});
+				}
+				;
 			}
+			
 		}
 		
 	}
@@ -78,30 +123,64 @@ int dijkstra (int src, int target){
 	return -1;
 }
 
-void graph_clear(int n){
-	for(int i = 1 ; i <= n; i++){
-		adj[i].clear();
-		//vis[i]=false;
-		parent[i]=-1;
-		
-		dis[i]=1e18;////////
+
+
+
+
+void grid_clear(int R,int C){
+	for(int row = 1; row <= R; row++){
+		for(int col = 1; col <= C; col++){
+			parent[row][col]={-1,-1};
+			dis[row][col]=1e18;
+		}
 	}
 }
+
+
+
+// Dynamically allocates memory based EXACTLY on current R and C values
+void grid_resize_and_clear(int rows, int cols) {
+	// Size dynamically up to rows + 1 / cols + 1 to perfectly handle 1-based indexing
+	grid.assign(rows + 1, vector<int>(cols + 1, 0));
+	dis.assign(rows + 1, vector<int>(cols + 1, 1e18));
+	parent.assign(rows + 1, vector<point>(cols + 1, {-1, -1}));
+}
+
+
+
+
+
+
+
+
+
+
 
 void solve(int tc){
 	// //dbg:
 	 // cerr<<"at the test case no."<<tc<<" : \n";
 	
-	int src,target;
 	// cin>>n>>m>>src>>target;
-	cin>>n>>m; src=1,target=n;
+	cin>>R>>C; 
 	
-	graph_clear(n);
 	
-	for(int i = 1 ,u,v,w ; i<=m ;i++){
-		cin>>u>>v>>w;
-		adj[u].push_back({v,w});
-		adj[v].push_back({u,w});
+	
+	///////////which one is used???mmm..
+	grid_clear(R,C);
+	// grid_resize_and_clear(R,C); 
+	
+	
+	
+		
+	point src={1,1};
+	
+	point target={R,C};
+	
+	
+	for(int i = 1; i <= R; i++) {
+		for(int j = 1; j <= C; j++) {
+			cin >> grid[i][j];
+		}
 	}
 	
 	int ans = dijkstra(src,target);
@@ -115,15 +194,15 @@ void solve(int tc){
 		
 		// cout<<ans<<'\n';
 		
-		vector<int>path;
-		int cur=target;
-		while(cur!=-1){
+		vector<point>path;
+		point cur=target;
+		while(cur.x != -1 && cur.y != -1) {     //while(cur!={-1,-1}){ //< this is not correct unless operators define for != with the struct
 			path.push_back(cur);
-			cur=parent[cur];
+			cur=parent[cur.x][cur.y];
 		}
 		reverse(path.begin(),path.end());
 		
-		for(auto&step:path)cout<<step<<' ';
+		for(auto&step:path) cout << "(" << step.x << "," << step.y << ") ";
 		
 		cout<<'\n';
 		
