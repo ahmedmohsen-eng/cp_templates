@@ -16,6 +16,7 @@ struct node {  // fix ::::: typo error ( struct not strcut (focut!!) )
 
 struct cmp{
     bool operator()(node&a,node&b){
+        //smaller comes firstly
         return a.cost > b.cost;///////what if cost is equal???? it doesn't matter any one comes first
     }
 };// fix ::::: don't forget the ;
