@@ -1,3 +1,10 @@
+
+//conditions : all weights are positive
+
+//it could be either directed or undirected (but if it is undirected then build the adj right(adding the adj[u],adj[v] ))
+
+
+
 //for visualization :        https://visualgo.net/en/sssp
 
 #include<bits/stdc++.h>
