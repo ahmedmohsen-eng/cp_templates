@@ -1,5 +1,5 @@
 
-//conditions : all weights are non-negative ( positive or zero) 
+//conditions : all weights are non-negative ( positive or zero ) 
 
 //it could be either directed or undirected (but if it is undirected then build the adj right(adding the adj[u],adj[v] ))
 
