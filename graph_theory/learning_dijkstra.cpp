@@ -3,7 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-strcut node {
+struct node {  // fix ::::: typo error ( struct not strcut (focut!!) )
     int idx,cost;////take care of naming , for example idx or index ????? mmmmm..
 };
 
