@@ -33,17 +33,18 @@ int dijkstra (int src, int target){
 		node u = pq.top();
 		pq.pop();
 		
-		if(u.idx==target)return u.cost;
-		
 		if(vis[u.idx]) continue;
-		vis[u.idx]=true;//mark as visited
+
+		//error was returning before assigning the value of the parent of the target (last step)
+		vis[u.idx]=true;
 		parent[u.idx]=u.par;//////
 				//the popped one is the optimal one , so
 					// use it as the parent for its children
 		
+		if(u.idx==target)return u.cost;
+		
 		for(auto&v:adj[u.idx]){
 			if(!vis[v.idx]){
-				parent[v.idx]=u.idx;
 				pq.push({v.idx,u.cost+v.cost,u.idx});//
 										//add u.idx as parent for v.idx 
 			}
@@ -67,11 +68,12 @@ void solve(int tc){
 	// //dbg:
 	 // cerr<<"at the test case no."<<tc<<" : \n";
 	
-	// graph_clear(n);
 	
 	int src,target;
 	// cin>>n>>m>>src>>target;
-	cin>>n>>m; src=1,target=n;
+	cin>>n>>m; src=1,target=n;/// or cin>>src>>target; // depends on the problem
+	
+	graph_clear(n);
 	
 	for(int i = 1 ,u,v,w ; i<=m ;i++){
 		cin>>u>>v>>w;
