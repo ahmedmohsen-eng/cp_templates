@@ -25,7 +25,7 @@ bool multicases_=false;
 
 
 struct node{
-	int idx,cost,par;//
+	int idx,cost;//
 };
 
 struct cmp{
@@ -47,27 +47,28 @@ int dijkstra (int src, int target){
 	priority_queue<node,vector<node>,cmp>pq;
 	
 	dis[src]=0;////////////////
-	pq.push({src,0,-1});
+	pq.push({src,0});
 	
 	while(!pq.empty()){
 		node u = pq.top();
 		pq.pop();
+
+		if(u.cost > dis[u.idx]) continue;
 		
 		if(u.idx==target)return u.cost;
 		
 		//if(vis[u.idx]) continue;
 		//vis[u.idx]=true;
-		if(u.cost > dis[u.idx]) continue;
 		
-		parent[u.idx]=u.par;
 		
 		for(auto&v:adj[u.idx]){
-			if(u.cost+v.cost<dis[v.idx]){
+			int newDist = u.cost + v.cost;
+			if(newDist<dis[v.idx]){
 				
-				dis[v.idx]=u.cost+v.cost;///////
+				dis[v.idx]=newDist;///////
 				
 				parent[v.idx]=u.idx;
-				pq.push({v.idx,u.cost+v.cost,u.idx});
+				pq.push({v.idx,newDist});
 				
 			}
 		}
