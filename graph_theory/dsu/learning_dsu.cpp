@@ -42,7 +42,10 @@ struct DSU {
         cnt = n;//initally all are disconnected compmonents so number of connected components is 1
         parent.resize(n + 1);
         sizes.resize(n + 1);
-        for (int i = 1; i <= n; i++)
+        
+		//sometimes intializing with n+3 is good if you need to check after and before (and also 1-indexed)
+		
+		for (int i = 1; i <= n; i++)
         {
             parent[i] = i;
             sizes[i] = 1;
@@ -90,8 +93,7 @@ void solve(int tc){
 	
 	
 	DSU d;
-	d.init(n+3);
-	//+3 is good if you need to check after and before (and also 1-indexed)
+	d.init(n);
 	
 	int qq,u,v;//query type, first point , second point(or node)
 	while(q--){
