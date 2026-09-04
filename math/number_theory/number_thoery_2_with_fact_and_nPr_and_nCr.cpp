@@ -298,6 +298,9 @@ void build_fact_and_fact_inv(int mod=1'000'000'007){
         inv_fact[i]=mod_inverse(fact[i],mod);
     }
 }
+
+////////////optimized into >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 /* another way for building the factorials with inverse factorials       with only complexity of n instead of log n
 the previous one takes logn because using fastpow inside mod inverse in each one which is not necessary
 you can calculate it in O(N):
