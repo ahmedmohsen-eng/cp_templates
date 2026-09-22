@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool multicases_=true;
+bool multicases_=false;
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -114,7 +114,7 @@ void solve(int tc){
 	// //dbg:
 	 // cerr<<"at the test case no."<<tc<<" : \n";
 	
-	int n; cin>>n;
+	int n,q; cin>>n>>q;
 	vector<int>arr(n);
 	for(int i = 0 ;i < n; ++i){
 		cin>>arr[i];
@@ -124,9 +124,12 @@ void solve(int tc){
 	SparseTable st = SparseTable(arr);
 	
 	//query on it !!
-	int l,r;
-	cin>>l>>r;
-	cout<<st.get(--l,--r);//getting the ans         , fixed ::::::::: --l,--r because it is built as 0-indexed
+	while(q--){
+		int l,r;
+		cin>>l>>r;
+		cout<<st.get(--l,--r)<<'\n';//getting the ans         , fixed ::::::::: --l,--r because it is built as 0-indexed
+							//don't forget endline
+	}
 	
 	
 	
