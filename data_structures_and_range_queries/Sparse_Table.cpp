@@ -1,0 +1,163 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool multicases_=true;
+
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+// template<class  T>using ordered_multiset = tree<T,null_type,less_equal<T>,rb_tree_tag,tree_order_statistics_node_update>;
+template<typename T>using ordered_multiset = tree<pair<T, int>, null_type, less<pair<T, int>>, rb_tree_tag, tree_order_statistics_node_update>;
+template<typename T>using ordered_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
+
+using ll = long long;
+// #define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??
+typedef unsigned long long u64;//this or the one  below
+#define ull unsigned long long
+
+
+
+
+
+
+
+
+
+///////condition to use sparse table for some property : 
+	// suppose the propoerty is a function :
+		// fun(x,x)=x
+			//for example : min(x,x)=x
+							//but : sum(x,x)!=x , but it is equal to 2x 
+	
+	//why this :
+		// because :
+			// we recalculate the same value many times to build the table
+
+
+
+//////////////note  :  the array must be the same indexing system as sparse table (0/1 indexing)
+////////////////////////////// the following is 0-indexed: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+struct SparseTable {	//known as RMQ : Range Minimum Queries
+	
+	vector<vector<int>>data;
+	vector<int>logs;
+	
+	
+	
+	///////////////////////////////////////////////the only thing to edit :
+	
+	int merge(int &lf,int &rt){	//////change this to the function you want <<<<<<<<<
+		return min(lf,rt);//left,right
+	}
+	
+	////////////
+	
+	
+	SparseTable(vector<int>&arr){ /// constructor
+		
+		int n = arr.size();
+		
+		logs.assign(n+1,0);//we made 0 and 1 value with 0, all next depend on previous
+		for(int i = 2 ;i <= n; ++i){//loop from 2 not 0 nor 1 ,,,,, fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			logs[i]=logs[i/2]+1;
+		}
+		
+		data.assign(logs[n]+1,vector<int>(n));
+		data[0]=arr;
+		
+		for(int i = 1 ;i <=logs[n];++i){
+			int len=1<<i;//1,2,4,8,16 (length of window)
+			for(int j = 0 ; j+len-1<n;++j){
+				data[i][j] = merge( data[i-1][j] , data[i-1][j+(len>>1)] );//merge
+						//the last one means :          ^
+							// last row,    same column + half length 
+			}
+		}
+		
+		
+	}	//end of constructor
+	
+	int get (int l, int r){
+		int len = r-l+1;
+		int level = logs[len];	///length of window
+		/////(l ...).. r
+		/////l ..(... r)
+		////////here first window start is l
+		///////second window start is r-(window size)+1   ,, window size is log(level)
+		////window size is greatest number which is power of 2 and smaller or equal to length
+		
+		
+		return merge(data[level][l],data[level][r-(1<<level)+1]);
+	}
+	
+};
+
+
+
+
+
+
+void pre_compute(){
+		
+	
+	
+}
+
+
+
+
+
+void solve(int tc){
+	// //dbg:
+	 // cerr<<"at the test case no."<<tc<<" : \n";
+	
+	int n; cin>>n;
+	vector<int>arr(n);
+	for(int i = 0 ;i < n; ++i){
+		cin>>arr[i];
+	}
+	
+	//creating the data structure
+	SparseTable st = SparseTable(arr);
+	
+	//query on it !!
+	int l,r;
+	cin>>l>>r;
+	cout<<st.get(--l,--r);//getting the ans         , fixed ::::::::: --l,--r because it is built as 0-indexed
+	
+	
+	
+}
+
+
+
+
+
+
+signed main(){
+	
+	ios::sync_with_stdio(0);cin.tie(0);
+	
+	//setIO("problemname");
+	
+	//the following output way overwrites the file:
+	
+	// freopen("problemname.in", "r", stdin);
+	// // the following line creates/overwrites the output file
+	// freopen("problemname.out", "w", stdout);
+	
+	
+	
+	pre_compute();
+	
+	int tc=1;
+	if(multicases_)cin>>tc;
+	int total_tcs=tc;
+	while(tc--){
+		solve(total_tcs-tc);
+	}
+	return 0;
+}
