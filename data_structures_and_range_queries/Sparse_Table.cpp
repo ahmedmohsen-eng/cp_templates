@@ -40,6 +40,8 @@ typedef unsigned long long u64;//this or the one  below
 //////////but for the sparse table it doesn't matter because always you can put empty additional space and it doesn't matter
 					///////it doesn't matter  because when you query you query on the available data
 
+/////building : nlogn , query : O(1)
+
 struct SparseTable {	//known as RMQ : Range Minimum Queries
 	
 	vector<vector<int>>data;
