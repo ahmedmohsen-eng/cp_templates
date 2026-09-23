@@ -18,7 +18,7 @@ typedef unsigned long long u64;//this or the one  below
 
 
 
-//the sparse table was built to use non-empty intervals only
+//the sparse table was built to use non-empty intervals only (at least one element)  <<<<edge case so make sure
 	//////so handle this through edge cases !!!!!!!!!!!!!!!!!!!!!
 
 
