@@ -155,8 +155,19 @@ void solve(int tc){
 }
 
 
-
-
+///////////some notes , tips and tricks:
+////////////if you want to get summation how to do that because overlapping happen ?????mmmmmm...:
+		/////////// :
+		///////////////// you can divide it into its binary representation of the length:
+			//for example :
+			/// summation from element 2 to element 8
+			//////length=7
+				///////binary representation 111
+					///////so take 4 elements then 2 elements then 1 elements    , and add them
+						////////which happens in log(n)
+								//////so if prefix can calculate it , use it because of the O(1)calculation
+									/////but if prefix can't do it and have overlapping then use this method
+												/////////////but it is rarely (rarely) appear  in problems(if appeared !!!!!)
 
 
 
