@@ -99,7 +99,10 @@ struct SparseTable {	//known as RMQ : Range Minimum Queries
 };
 
 
-
+/////////////////////the window size is : largest power of 2 <= n
+	////////////why is this enough ? :
+		//////   because it is the largest power of 2 <=n so when it is mulitplied into 2 it is bigger than n
+			///////////// which means covering all elements with the two windows
 
 
 
