@@ -35,10 +35,10 @@ typedef unsigned long long u64;//this or the one  below
 
 
 
-//////////////note  :  the array must be the same indexing system as sparse table (0/1 indexing)
-////////////////////////////// the following is 0-indexed: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//////////////note  :  the query must be the same indexing system as array input (0/1 indexing)
 
-
+//////////but for the sparse table it doesn't matter because always you can put empty additional space and it doesn't matter
+					///////it doesn't matter  because when you query you query on the available data
 
 struct SparseTable {	//known as RMQ : Range Minimum Queries
 	
@@ -110,30 +110,50 @@ void pre_compute(){
 
 
 
+
+
+
+
 void solve(int tc){
 	// //dbg:
 	 // cerr<<"at the test case no."<<tc<<" : \n";
 	
 	int n,q; cin>>n>>q;
-	vector<int>arr(n);
-	for(int i = 0 ;i < n; ++i){
+	vector<int>arr(n+1);//don't forget n+1 (if you want it like this to be always fitting the size(converting to 1-indexing))
+								////as said some empty spaces wouldn't make problems because they woudn't be used
+	for(int i = 1 ;i <= n; ++i){
 		cin>>arr[i];
 	}
+	
+	
 	
 	//creating the data structure
 	SparseTable st = SparseTable(arr);
 	
+	
+	
 	//query on it !!
 	while(q--){
+	
+	
 		int l,r;
 		cin>>l>>r;
-		cout<<st.get(--l,--r)<<'\n';//getting the ans         , fixed ::::::::: --l,--r because it is built as 0-indexed
-							//don't forget endline
+		cout<<st.get(l,r)<<'\n';//getting the ans
+				//don't forget endline
+		
+		
+		
+		//, if it is 0-indexed don't forget : --l,--r 
 	}
 	
 	
 	
+	
+
 }
+
+
+
 
 
 
