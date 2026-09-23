@@ -164,6 +164,7 @@ void solve(int tc){
 			//////length=7
 				///////binary representation 111
 					///////so take 4 elements then 2 elements then 1 elements    , and add them
+											//////(power of 2 jumps)<<<<<<<<<<<<<<<<<
 						////////which happens in log(n)
 								//////so if prefix can calculate it , use it because of the O(1)calculation
 									/////but if prefix can't do it and have overlapping then use this method
