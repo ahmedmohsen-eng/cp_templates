@@ -18,7 +18,8 @@ typedef unsigned long long u64;//this or the one  below
 
 
 
-
+//the sparse table was built to use non-empty intervals only
+	//////so handle this through edge cases !!!!!!!!!!!!!!!!!!!!!
 
 
 
@@ -40,7 +41,7 @@ typedef unsigned long long u64;//this or the one  below
 //////////but for the sparse table it doesn't matter because always you can put empty additional space and it doesn't matter
 					///////it doesn't matter  because when you query you query on the available data
 
-/////building : nlogn , query : O(1)
+/////building : nlogn . x     ,        query : O(x)           and x is the time of operation (merge function)
 
 struct SparseTable {	//known as RMQ : Range Minimum Queries
 	
