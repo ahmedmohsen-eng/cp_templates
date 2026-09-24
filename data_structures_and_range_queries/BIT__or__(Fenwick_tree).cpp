@@ -213,7 +213,7 @@ struct BIT {
 
 //////////trick:
 //if you want min, and other operations like that :
-//you can use them but with point query not range query
+//you can use them with only updating(not setting) with only point queries not ranges xxxx
 
 ///////////trick:
 ///if you want suffix not prefix then reverse the array and then build the BIT
