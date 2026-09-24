@@ -76,7 +76,7 @@ struct SparseTable {	//known as RMQ : Range Minimum Queries
 			for(int j = 0 ; j+len-1<n;++j){
 				data[i][j] = merge( data[i-1][j] , data[i-1][j+(len>>1)] );//merge
 						//the last one means :          ^
-							// last row,    same column + half length 
+							// last row,    same column + half length (because previous window length is half of the current window length(as rows))
 			}
 		}
 		
