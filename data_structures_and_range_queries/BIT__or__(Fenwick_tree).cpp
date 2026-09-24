@@ -152,9 +152,11 @@ struct BIT {
 	
 	
 	//constructor
-	BIT(vector<long long>arr){
+	BIT(vector<long long>arr){ //beginning of constructor
+		
 		n=arr.size()-1;//must be 1-indexed <<<<<<<<<<<<<<<<<<<<<<<<<<<
 		b.assign(n+1,def_op);
+		
 		
 		// for(int i = 1 ;i <= n; i++){
 			// update(i,arr[i]);
@@ -171,8 +173,20 @@ struct BIT {
 			if(parent<=n)b[parent]=op(b[parent],b[i]);
 		}
 		
+		
+	} //end of constructor
+	
+	
+	BIT(int _n){////if we want empty array 
+					//(maybe for range update, point query)
+						///because range update point query requires intially all empty 
+									//(two arrays one of the BIT, and the original)
+										//this is because when adding as difference array we want to avoid add original values if kept without making -x directly at the index after 
+																									//(to avoid including at the prefix for other elements)
+															///////because condition of differencea array is begin with default value(0 for the plus-minus)
+		n=_n;
+		b.assign(n+1,def_op);
 	}
-	//end of constructor
 	
 	
 };
