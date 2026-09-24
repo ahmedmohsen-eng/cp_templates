@@ -249,6 +249,7 @@ void solve(int tc){
 		if(qq==1){
 			cin>>l>>r>>v;
 			b.update(l,v);
+			//r+1 safe here because we add the safety in the BIT itself    if(bit<=n)
 			b.update(r+1,b.inv_op(b.def_op,v));//order matters because if - then 0-x not x-0
 														////same thing for some operations like *
 		} else {
