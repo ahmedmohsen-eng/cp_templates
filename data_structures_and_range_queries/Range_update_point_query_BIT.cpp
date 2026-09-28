@@ -254,7 +254,7 @@ void solve(int tc){
 														////same thing for some operations like *
 		} else {
 			cin>>i;
-			cout<<arr[i]+b.get(i)<<'\n';
+			cout<<arr[i]+b.get(i)<<'\n';//original value + change to it
 		}
 	}
 	
