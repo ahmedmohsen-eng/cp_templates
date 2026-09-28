@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool multicases_=true;
+bool multicases_=false;
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -11,7 +11,7 @@ template<typename T>using ordered_multiset = tree<pair<T, int>, null_type, less<
 template<typename T>using ordered_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
 
 using ll = long long;
-#define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??
+#define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 typedef unsigned long long u64;//this or the one  below
 #define ull unsigned long long
 
@@ -151,30 +151,50 @@ struct BIT {
 	}
 	
 	
-	//constructor
+	//constructor ((((((and you can't make this if you want to use the lowerbound function'))))))<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	BIT(vector<long long>arr){ //beginning of constructor
 		
-		n=arr.size()-1;//must be 1-indexed <<<<<<<<<<<<<<<<<<<<<<<<<<<
-		b.assign(n+1,def_op);
+		
+		int original_n=arr.size()-1;//must be 1-indexed <<<<<<<<<<<<<<<<<<<<<<<<<<<
+		///////to make it right with the lower bound function:        (note: not needed if you made the step as power of 2 at each query of lower bound but it is expensive in time, but here this maybe sometimes expensive in memory)
+			n=1;
+			while(n<original_n)n<<=1;
+		
+		b.assign(n+1,def_op);////we made the value of original n saved to know the number of actual values 	
+											//and also to run to original n not to end of array which is power of two
+		
+		//we edited n itself because downward we used it as the first step in the lower_bound function
+							//so we need it as the nearest power of two greater or equal
 		
 		
+		/////_______________//building with nlogn time:
 		// for(int i = 1 ;i <= n; i++){
 			// update(i,arr[i]);
 		// }
+		
+		
 		
 		//optimized to (O(n)) instead of nlogn:
 		//it is directed acyclic graph so while passing add to its parent
 			//which means when finishing it is linear time and all values have their exact ranges
 				//note: don't set but make operation , to store values of children gained before entering it!
 					//and of course even accessed a parent then children, this doesn't matter ->because also we add the parent(so order of accessing doesn't matter)'
+		
+		///////fix::::::values of array up to original n but parents up to n , so make two different loops
+		
+		for(int i=1;i<=original_n;i++){
+			b[i] = op(b[i], arr[i]);
+		}
+		
 		for(int i = 1 ;i<=n ;i++){
-			b[i]=op(b[i],arr[i]);
 			int parent=i+(i&-i);
-			if(parent<=n)b[parent]=op(b[parent],b[i]);
+			if(parent<=n)b[parent]=op(b[parent],b[i]);///////fix:::in compraison it is n not original_n 
+														//because when checking the last element when power of 2 then we must know what it contains
 		}
 		
 		
 	} //end of constructor
+	
 	
 	
 	BIT(int _n){////if we want empty array 
@@ -184,12 +204,78 @@ struct BIT {
 										//this is because when adding as difference array we want to avoid add original values if kept without making -x directly at the index after 
 																									//(to avoid including at the prefix for other elements)
 															///////because condition of differencea array is begin with default value(0 for the plus-minus)
-		n=_n;
+		
+		
+		
+		
+		
+		/////to make the lower bound trick (defined downward), we need to make the array the power of 2 greater than or equal to n <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		n=1;
+		while(n<_n){
+			n<<=1;
+		}
 		b.assign(n+1,def_op);
+		
+		//////////////////_____________takecare______///////////////////// :
+		/*
+		b.assign(n+1,def_op);//////can be used if we found at each time the power of two bigger or equal to n in each lower bound query (but it may be more expensive)
+		*/
+	}
+	
+	
+	
+	//making lowerbound in log instead of logSquared (instead of using get inside binary search) //////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	////by making the size power of two greater than or equal to n , so:
+		//the last conatnis the all of the array
+		//and the index at the middle contains the half of the array
+		//and the index at the middle of the right segment contains the first half of that segment and so on
+		//
+			//and when we found segment of values with summation smaller than required 
+				//then we substract them from targetsum and skip them to continue searching for the rest of the sum 
+	//
+	int lower_bound(long long sum){   ////////note:use when you use summation only as op !!!!!!!!!!!!!!!!!!!!!!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		
+		//////////////////_____________takecare______///////////////////// :
+		/*
+		///to make it work for power of 2 and non power of 2 sizes : (to save memory sometimes)
+		// Find the largest power of 2 <= n
+	    int mask = 1;
+	    while ((mask << 1) <= n) mask <<= 1;
+		//////and actually the previous part can be removed if you made the array size as power of two
+		*/
+		
+		
+		////////fix::::::::::::::::::::::::::::::: added    skip + step <= n &&
+														///because if it is greater then it will acess outside
+		int skip=0;
+		for(int step=n;step>0;step>>=1){//step decreases to half of it which takes log time only !!
+			if(skip + step <= n &&b[skip+step]<sum){
+				sum-=b[skip+step];
+				skip+=step;
+			}
+		}
+		
+		//////////due to condition of if skip+step<=n then it is enough and safe
+		// if sum > total array sum, then skip will be the next power of two  ////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		// if(skip>=n)return n+1;
+		
+		//if sum <= total array sum:
+		return skip+1;
+		//note: we used greater comparison so if it is exactly the sum then skip=n-1
 	}
 	
 	
 };
+
+//////////hint::sometimes you need to make the datastructure contains frequency array values not the values of the array itself directly !!!!!!!       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+
+
+
+
 
 
 
