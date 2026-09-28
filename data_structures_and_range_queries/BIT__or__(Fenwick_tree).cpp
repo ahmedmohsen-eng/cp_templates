@@ -255,9 +255,8 @@ struct BIT {
 			}
 		}
 		
-		//////////due to condition of if skip+step<=n then it is enough and safe
-		// if sum > total array sum, then skip will be the next power of two  ////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		// if(skip>=n)return n+1;
+		//if(sum>total) then skip will be n which means nothing exists
+		if(skip==n)return -1;
 		
 		//if sum <= total array sum:
 		return skip+1;
