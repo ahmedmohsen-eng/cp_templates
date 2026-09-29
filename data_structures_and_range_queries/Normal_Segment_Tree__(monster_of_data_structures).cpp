@@ -3,7 +3,7 @@
 		//which means suppose the operation is '*'   then (a*b)*c=a*(b*c)
 	//if it is not associative then it is not supported 
 		//because it may be edited in different orders
-
+		//in other words:// because the segment tree may combine segments in different groupings
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -18,7 +18,6 @@ template<typename T>using ordered_multiset = tree<pair<T, int>, null_type, less<
 template<typename T>using ordered_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
 
 using ll = long long;
-// #define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??
 typedef unsigned long long u64;//this or the one  below
 #define ull unsigned long long
 
@@ -34,6 +33,27 @@ what can be edited:(for changing usage)
 3-return of the get function
 */
 
+
+//////if you want to return more than thing , then:
+   //you can return the point and get whatever you want from it 
+	    //for example: after returning the point in the get function (second get) and you want x,y
+	     //so you can do cout<<sg.get_range(l,r).x<<' '<<sg.get_range(l,r).y;
+
+
+
+
+const long long oo = 1e18;
+
+
+//////note 
+/////if you are not using the definition as long long so the vector must be long long
+//////////// due to the implementation of struct as this was built like that to avoid overflow
+//
+//
+//
+
+//
+// #define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??
 
 ///////////////////////////////////////////////////////////////////////////can be edited:
 struct Node{
@@ -82,7 +102,9 @@ struct SegTree{
 	///////////////////////////////////////////////////////////////////////////can be edited:
 	Node merge(const Node&lf,const Node&ri){
 		Node ans=Node();
+		//
 		ans.sum=lf.sum+ri.sum;
+		//
 		return ans;
 	}
 	
