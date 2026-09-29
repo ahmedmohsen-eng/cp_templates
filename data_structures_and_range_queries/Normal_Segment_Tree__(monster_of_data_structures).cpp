@@ -2,8 +2,19 @@
 	//the operation must be associative
 		//which means suppose the operation is '*'   then (a*b)*c=a*(b*c)
 	//if it is not associative then it is not supported 
-		//because it may be edited in different orders
-		//in other words:// because the segment tree may combine segments in different groupings
+		// because the segment tree may combine segments in different groupings
+				//(and they remain in same order but what matters is different groupings)
+
+/*
+	
+	reason of needing associativity  (explained by ai)
+	A segment tree stores answers for predefined grouped segments.
+	During a query, those precomputed answers are merged according to the tree's grouping.
+	Therefore, 
+		the merge operation needs to be associative 
+			so that different valid groupings produce the same result.
+*/
+
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -42,12 +53,26 @@ what can be edited:(for changing usage)
 
 
 
+
+
+///////i prefer returning a point then use whatever you needed from it <<<<<<<<<<<<<<<<<<<<
+
+
+
+
+
+
 const long long oo = 1e18;
 
+////////////////note***********: that max is required so keep it in both merge and node
+	/////////to use the lower bound function (and kth one if needed)
 
-//////note 
-/////if you are not using the definition as long long so the vector must be long long
-//////////// due to the implementation of struct as this was built like that to avoid overflow
+
+
+//note 
+///if you are not using the definition as long long so the arr (input) must be long long
+///due to the implementation of struct as this was built like that to avoid overflow 
+//--------------    follow up   ------->							and to have larger range
 //
 //
 //
@@ -67,11 +92,15 @@ struct Node{
 	
 			
 	
-	long long sum;
+	long long mx,   sum;
 	Node(){
+		mx=-oo;
+		
 		sum=neutral;
 	}
 	Node(long long x){/////fixed::::long long to avoid overflow
+		mx=x;
+		
 		sum=x;
 	}
 };
@@ -93,15 +122,17 @@ struct SegTree{
 	vector<Node>SegData;
 	
 	SegTree(int n){
+		
 		tree_size=1;
-		while(tree_size<n)tree_size<<=1;
-		SegData.assign(2*tree_size,Node()); //n leaves, n-1 internal nodes
+		while(tree_size<n)tree_size<<=1;	//tree_size here means nearest greater or equal power of 2
+		SegData.assign(2*tree_size,Node()); // ^ tree_size leaves, tree_size-1 internal nodes
 									//^ neutral <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	}
 	
 	///////////////////////////////////////////////////////////////////////////can be edited:
 	Node merge(const Node&lf,const Node&ri){
 		Node ans=Node();
+		ans.mx=max(lf.mx,ri.mx);
 		//
 		ans.sum=lf.sum+ri.sum;
 		//
@@ -123,14 +154,14 @@ struct SegTree{
 	}	
 	
 	///////////////////////////////////////////////////////////////////////////can be edited:
-	long long get_range(int l, int r){ 	////////////////important: R not included !!!!!!!
-		return get_range(l,r,0,0,tree_size).sum;
+	Node get_range(int l, int r){ 	////////////////important: R not included !!!!!!!
+		return get_range(l,r,0,0,tree_size);
 						//   ^ we started from the top
 	}
 	
 	
 	////************************setting
-	
+		/////////note : setting here is assuming safe setting :: !!!!!!!!!!!!!!!!!!!!!!!!!!
 	void set(int idx,long long val, int node, int lx, int rx){
 		if(rx-lx==1){//this means you are at a leaf
 			SegData[node]=Node(val);
@@ -138,7 +169,8 @@ struct SegTree{
 		}
 		
 		int mid=(lx+rx)>>1;
-		if(idx<mid)//mid here is considered part of the right not the left
+		if(idx<mid)//mid here is considered part of the right not the left segment
+						// [lx,mid) is the left segment, [mid,rx) is the right segment
 			set(idx,val,2*node+1,lx,mid);
 		else
 			set(idx,val,2*node+2,mid,rx);
@@ -170,6 +202,108 @@ struct SegTree{
 	void build(const vector<long long>&arr){
 		build(arr,0,0,tree_size);
 	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	/*
+	///////////kth one(if all are ones and zeros):
+	//////////make sure that input is safe(make sure that it can't be more than number of ones!)
+	int kth(int cnt,int node,int lx,int rx){
+		if(rx-lx==1){//when it is a lefa
+			return lx;
+		}
+		
+		int mid=(lx+rx)>>1;
+		int lf_sum=SegData[2*node+1].sum;
+		if(lf_sum>=cnt)
+			return kth(cnt,2*node+1,lx,mid);
+		return kth(cnt-lf_sum,2*node+2,mid,rx);
+	}
+	int kth(int cnt){
+		return kth(cnt,0,0,tree_size);
+	}
+	////
+	*/
+	
+	
+	//////note:
+	////if we want kth one using find_first
+	////////and actually we can use binary search on prefix sum 
+		//then the first index has prefix sum >=k is the answer
+			//but here it is 1 because each time at most it increases by 1
+				//////////////////i mean at the problem of 1s and 0s
+		///////////////prefix sum here can be done using get summation from 1 to i
+																	//or 0 to i (if 0-indexed)
+	
+	
+	
+	
+	
+	//***********************************************************************
+	//***********************************************************************
+	//***********************************************************************
+	//////to search in unsorted array for the lowerbound of x:
+		//we can use prefix mx and lowerbound for the value x
+	
+	
+	
+	//////so we use the same idea of the (max) to find first position has value>=x  !!
+											////////(it doesn't have to be exactly the max!!)
+	
+	//////find first (lower bound in unsorted)
+	
+	
+	
+	int find_first(int l, int r, long long x,int node, int lx, int rx){
+		
+		if(lx>=r||rx<=l)	//if went to point out of range
+			return -1;
+		
+		if(SegData[node].mx<x) ///if it is lower than required
+			return -1;
+		
+		if(rx-lx==1)		//if it is a leaf
+			return lx;
+		
+		//logic is to search left, if not found then search right 
+		  //(for easier and simple implementation)
+		    //>>>>>>>because searching at left firstly guarantees the smallest index is returned
+		
+		int mid=(lx+rx)>>1;
+		int ans=find_first(l,r,x,2*node+1,lx,mid);
+		if(ans==-1)
+			ans=find_first(l,r,x,2*node+2,mid,rx);
+		
+		return ans;///fix::::don't forget the return statement
+	}
+	
+	
+	
+	int find_first(int l, int r,long long x){
+		return find_first(l,r,x,0,0,tree_size);
+	}
+	
+	
+	/*
+		
+		explanation of find_first by ai:
+		//////to find the first position in [l,r) whose value >= x:
+		//////we store the maximum of every segment
+		//////if a segment's maximum < x, we can skip the whole segment
+		//////then search left first, and if not found, search right
+		
+	*/
+	
 	
 };
 
