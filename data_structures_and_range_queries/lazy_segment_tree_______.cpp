@@ -91,6 +91,7 @@ void pre_compute(){
 
 
 
+//when	 you reach a node propagate from it to its two children !!
 
 
 
@@ -158,6 +159,7 @@ struct LazySegTree{
 	
 	//////////////////////////////////////////////
 	void propagate(int node, int lx, int rx){ ///propagate to the two children only
+		
 		
 		//if it is a leaf or doesn't carry any lazy value
 		if(rx-lx==1||SegData[node].is_lazy==false) //////fix::::::rx-lx not lx-rx
