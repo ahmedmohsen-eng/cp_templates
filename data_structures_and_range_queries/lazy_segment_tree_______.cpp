@@ -80,11 +80,26 @@ void pre_compute(){
 //////////whenever you make any function make the propagate fun. in the first line
 /////////////even before the base cases 
 				//(because kareem said that some problems quries that he faced while solving caused him some problems when he put the propagate function after the base case )
-				
+					/////////////even sometimes the best practice is after base case(for better optimization) but it doesn't matter
+///////////////////////////////////////////////i mean here by base case if(...) return
 
 
 
 
+
+
+
+//when	 you reach a node propagate from it to its two children !!
+
+
+
+
+
+
+//////notice that there are two functions called update:
+//1- update in node     ->   updating the node while traversing
+	//this is used for easier template (minimum coding)
+//2- udpate in seg      ->   updating a range (l,r)  and r not included
 
 
 
@@ -97,13 +112,6 @@ void pre_compute(){
 	
 	
 */
-
-
-
-
-//when	 you reach a node propagate from it to its two children !!
-
-
 
 
 
