@@ -31,8 +31,6 @@ void pre_compute(){
 
 
 
-/////////>>::
-#define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??
 
 
 
@@ -121,8 +119,10 @@ void pre_compute(){
 			//which means also r-l is the number of elements (without +1)
 			//and when you want getting range from l to r then use get_range(l,r+1) .,.,,.,, notice it is r+1 here not r
 
+/////////>>::
+#define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??
 
-const long long oo = 1e18;
+const long long oo = 1e18,mod=1e9+7;
 
 struct Node{
 	long long mn;
