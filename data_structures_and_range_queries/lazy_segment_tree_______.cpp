@@ -13,7 +13,6 @@ template<typename T>using ordered_multiset = tree<pair<T, int>, null_type, less<
 template<typename T>using ordered_set = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
 
 using ll = long long;
-#define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??
 typedef unsigned long long u64;//this or the one  below
 #define ull unsigned long long
 
@@ -25,6 +24,17 @@ void setIO(string s) {
 void pre_compute(){
 	
 }
+
+
+
+
+
+
+
+/////////>>::
+#define int long long//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<??
+
+
 
 
 //////////////note that the segment tree is built on what we get not what we set (update)<<<<<<<<<important ******
@@ -140,7 +150,7 @@ struct LazySegTree{
 	
 	void build(const vector<int>&arr, int node, int lx, int rx){
 		if(rx-lx==1){
-			if(lx<arr.size()){
+			if(lx<(int)arr.size()){//fix::::(int) before arr.size()
 				SegData[node]=Node(arr[lx]);
 			}
 			return;////////fix::::::don't forget to return
@@ -221,7 +231,7 @@ struct LazySegTree{
 		return merge(lf,ri);
 	}
 	
-	long long get_range(int l, int r){
+	Node get_range(int l, int r){///////fix: returning correct data type
 		return get_range(l,r,0,0,tree_size);
 	}
 	
