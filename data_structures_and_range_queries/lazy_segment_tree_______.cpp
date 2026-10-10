@@ -68,7 +68,9 @@ void pre_compute(){
 
 ////////////****important:
 //////////whenever you make any function make the propagate fun. in the first line
-
+/////////////even before the base cases 
+				//(because kareem said that some problems quries that he faced while solving caused him some problems when he put the propagate function after the base case )
+				
 
 
 
