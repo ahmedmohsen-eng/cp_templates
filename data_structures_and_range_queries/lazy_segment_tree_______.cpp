@@ -100,6 +100,8 @@ void pre_compute(){
 //1- update in node     ->   updating the node while traversing
 	//this is used for easier template (minimum coding)
 //2- udpate in seg      ->   updating a range (l,r)  and r not included
+/////first is member in node, second is member in seg
+
 
 
 
@@ -246,6 +248,12 @@ struct LazySegTree{
 	
 	
 };
+
+////note :
+	// if you want to create an empty array intially in a problem and use the lazy seg tree
+		//then make an actual array (this is better to leave the default value as it is (the neutral value))
+
+
 
 
 //comment by ai (to know why top down works but not down top)
