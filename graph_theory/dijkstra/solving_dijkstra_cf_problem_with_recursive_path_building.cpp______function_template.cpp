@@ -61,7 +61,6 @@ priority_queue<state>q;
 
 int dijkstra(int src, int tar){
 	
-	
 	dist.assign(n+1,oo);
 	parent.assign(n+1,-1);
 	q={};///////////fix:::::clear the q /////////////////////////
@@ -74,6 +73,7 @@ int dijkstra(int src, int tar){
 		auto [cost,u]=q.top();
 		q.pop();
 		
+		//you can return the cost if you found the tar. (target) ,    but i chose to get all distances (choose whatever you want)
 		
 		if(cost>dist[u]) continue;
 		
