@@ -1,0 +1,71 @@
+/////////not complete template: only the algorithM:
+
+
+
+typedef long long W;               // change to long double for real weights
+const W oo = 1e18;                 // use 1e30L for long double
+
+int N;                             // nodes are 0..N-1
+vector<vector<W>> g;               // g[a][b] = weight of edge a->b, oo if no edge
+vector<W> dist;
+vector<int> par;
+vector<char> used;
+
+void init(int n){                  // call once per test case
+	N = n;
+	g.assign(N, vector<W>(N, oo));
+	for(int i = 0; i < N; i++) g[i][i] = 0;
+}
+
+void add_edge(int a, int b, W w, bool directed = false){
+	g[a][b] = min(g[a][b], w);     // keeps the cheapest if there are parallel edges
+	if(!directed) g[b][a] = min(g[b][a], w);
+}
+
+W dijkstra(int src, int target){
+	dist.assign(N, oo);
+	par.assign(N, -1);
+	used.assign(N, 0);
+	dist[src] = 0;
+
+	for(int it = 0; it < N; it++){
+		int node = -1;
+		for(int i = 0; i < N; i++)
+			if(!used[i] && (node == -1 || dist[i] < dist[node])) node = i;
+
+		if(dist[node] == oo) break;       // the rest are unreachable
+		used[node] = 1;
+		if(node == target) break;         // optional early exit
+
+		for(int x = 0; x < N; x++)
+			if(!used[x] && g[node][x] != oo && dist[node] + g[node][x] < dist[x]){
+				dist[x] = dist[node] + g[node][x];
+				par[x] = node;
+			}
+	}
+	return dist[target];                  // oo means unreachable
+}
+
+vector<int> get_path(int t){              // valid after a call to dijkstra
+	vector<int> p;
+	for(int x = t; x != -1; x = par[x]) p.push_back(x);
+	reverse(p.begin(), p.end());
+	return p;
+}
+
+
+
+/*
+  
+  usage:
+    init(n);                       // for nodes 1..n use init(n+1)
+    add_edge(a, b, w);             // undirected
+    add_edge(a, b, w, true);       // directed
+    W ans = dijkstra(s, t);
+    
+*/
+
+
+
+
+
