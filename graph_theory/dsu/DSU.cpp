@@ -39,6 +39,8 @@ struct DSU {
 	
 	vector<int>parent,sz;
 	
+	int cmps;//number of connected components
+	
 	DSU(int n){
 		sz.assign(n+1,1);
 		
@@ -49,6 +51,9 @@ struct DSU {
 		// for(int i=1;i<=n;i++){
 			// parent[i]=i;
 		// }
+		
+		cmps=n;
+		
 	}
 	
 	int get_leader(int u){
@@ -56,7 +61,7 @@ struct DSU {
 			return u;
 		
 		//after we understood the small to large that reduces to log compexity :
-		//path compression (ofcourse after using small to large) : O(1)amortized 
+		//path compression (ofcourse after using small to large) : O(1)amortized     : actually O(alpha(n)) amortized per operation
 				////amortized means number of operations / number of queries
 					//depends on inverse ackerman function (dp-like thinking):
 						//maximum 4 for usual large n
@@ -102,7 +107,7 @@ struct DSU {
 		parent[v]=u;
 		sz[u]+=sz[v];
 		
-		
+		cmps--;//number of connected components decreases by one if two nodes that are not in same component has been connected
 		return 1;
 	}
 	
