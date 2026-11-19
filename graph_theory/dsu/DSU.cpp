@@ -35,6 +35,10 @@ void pre_compute(){
 
 
 
+///whenever you want any information on the component (sum/max/min/etc...)
+	//you can make vector of what you want , then :
+	//and keep storing the information you want in the leader of the component while merging
+
 struct DSU {
 	
 	vector<int>parent,sz;
