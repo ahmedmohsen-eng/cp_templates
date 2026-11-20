@@ -42,6 +42,9 @@ void pre_compute(){
 struct DSU {
 	
 	vector<int>parent,sz;
+	//don't forget here to put the array you want (if needed), for ex: max,min,sum,etc....
+	//////////////////////////////////////////////////
+	//////////////////////////////////////////////////
 	
 	int cmps;//number of connected components
 	
@@ -57,6 +60,11 @@ struct DSU {
 		// }
 		
 		cmps=n;
+		
+		//don't forget to intialize the array you are using for storing information (if needed) , for ex: max,min,summation ,etc...
+		//////////////////////////////////////////////////
+		//////////////////////////////////////////////////
+		
 		
 	}
 	
@@ -110,6 +118,11 @@ struct DSU {
 		
 		parent[v]=u;
 		sz[u]+=sz[v];
+		
+		//don't forget here to update the information you want to get (if needed) , for ex: max,min,sum,multiplication,etc.....
+		//////////////////////////////////////////////////
+		//////////////////////////////////////////////////
+		
 		
 		cmps--;//number of connected components decreases by one if two nodes that are not in same component has been connected
 		return 1;
