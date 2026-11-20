@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool multicases_=true;
+bool multicases_=false;
 
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -68,32 +68,47 @@ struct DSU {
 	
 	DSU(int n){
 		
-		cmps=n;
+		cmps=0;
 		
-		sz.assign(n+1,1);
+		sz.assign(n+1,0);
 		parent.assign(n+1,0);
 		
 		//////////////////////////////////
-		head.assign(n+1,0) , tail.assign(n+1,0) ;
+		head.assign(n+1,0);
+		tail.assign(n+1,0);
 		//nxt assigned with -1! as indicator of tail
 		nxt.assign(n+1,-1);
+		
+		
+		////////////////take care :::::::::::::::::::::::::::::::::::::::::::::
+		////////////if graph is empty at the beginning , so comment the follwoing for loop:
+		///so this assumes there are nodes from 1 to n at the beginning:<<<<<<<<<<<<<<<<<<<<<<
 		for(int i=1;i<=n;i++){
 			//
+			cmps++;
+			sz[i]=1;
 			parent[i]=i;
 			head[i]=i;
 			tail[i]=i;
 		}
 		
-		
-		
-		
-		
 		//don't forget to intialize the array you are using for storing information (if needed) , for ex: max,min,summation ,etc...
 		
 		
-		
-		
 	}
+	
+	// ///////////////////take care::::::::::::::::::::::::::::::::::::::::::::::
+	// ///////////if graph is empty at the beginning so you use make_set to fill all details of that node
+	// /////
+	// void make_set(int u){
+	// cmps++;
+	// ///////////rest of details of the node:
+	//
+	//
+	//
+	// }
+	
+	
 	
 	int get_leader(int u){
 		if(parent[u]==u)
@@ -192,6 +207,23 @@ void solve(int tc){
 	 // cerr<<"at the test case no."<<tc<<" : \n";
 	
 	
+	/////solution to problem: https://judge.yosupo.jp/problem/unionfind
+	int n,q;cin>>n>>q;
+	
+	DSU dsu(n);
+	
+	
+	while(q--){
+		
+		int op,u,v;cin>>op>>u>>v;
+		if(op==0){
+			dsu.merge(u,v);
+		} else {
+			cout << dsu.is_connected(u,v)<<'\n';
+		}
+		
+	}
+	
 	
 	
 }
@@ -211,11 +243,13 @@ signed main(){
 	
 	pre_compute();
 	
+	//
+	cout<<setprecision(10)<<fixed;
+	
 	int tc=1;
 	if(multicases_)cin>>tc;
-	int total_tcs=tc;
-	while(tc--){
-		solve(total_tcs-tc);
+	for(int _=1;_<=tc;_++){
+		solve(_);
 	}
 	return 0;
 }
