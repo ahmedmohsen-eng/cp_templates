@@ -48,22 +48,49 @@ struct DSU {
 	
 	int cmps;//number of connected components
 	
+	
+	
+	
+	//////////////////////////////////
+	///now we want to have the ability to know all nodes in a component
+	//so we can use the logic of the linked list to use merge in O(1) instead of vector which takes more time
+	//so we have three vectors: 
+		// 1- next (acts as the pointer)
+		// 2- tail (to know the tail fast)
+		// 3- head (to know the head fast)
+	////merge happens by connecting ones head to another tail
+	/////////////also we can put the big on the left and other on the right 
+		//////////////so that always the lead is the head
+	vector<int>head,tail,nxt;///take care :::::::::::::: it is nxt not nextxxxxxxxxxxxxxxxxxxxx!!!!!!
+	
+	
+	
+	
 	DSU(int n){
-		sz.assign(n+1,1);
-		
-		parent.resize(n+1);
-		iota(parent.begin(),parent.end(),0);
-		//
-		// parent.assign(n+1,0);
-		// for(int i=1;i<=n;i++){
-			// parent[i]=i;
-		// }
 		
 		cmps=n;
 		
+		sz.assign(n+1,1);
+		parent.assign(n+1,0);
+		
+		//////////////////////////////////
+		head.assign(n+1,0) , tail.assign(n+1,0) ;
+		//nxt assigned with -1! as indicator of tail
+		nxt.assign(n+1,-1);
+		for(int i=1;i<=n;i++){
+			//
+			parent[i]=i;
+			head[i]=i;
+			tail[i]=i;
+		}
+		
+		
+		
+		
+		
 		//don't forget to intialize the array you are using for storing information (if needed) , for ex: max,min,summation ,etc...
-		//////////////////////////////////////////////////
-		//////////////////////////////////////////////////
+		
+		
 		
 		
 	}
@@ -94,6 +121,20 @@ struct DSU {
 		return sz[u];
 	}
 	
+	
+	vector<int> get_comp(int u){
+		u=get_leader(u);////to get the leader because we don't update heads
+								//because updatng all heads takes steps with number equal to the size of component
+		vector<int>nodes;
+		nodes.reserve(sz[u]);//to make the push back in O(1)
+		for(int i=head[u];i!=-1;i=nxt[i]){////fix::::::::::::nxt not next.xxxxxxxxxxxxx
+			nodes.push_back(i);
+		}
+		return nodes;////0-indexed
+	}
+	
+	
+	
 	bool merge(int u, int v){
 		//common mistake is to forget these two lines in any of these helper function : merge,is_connected
 		u = get_leader(u);
@@ -102,6 +143,7 @@ struct DSU {
 		if(u == v) return 0;
 		
 		
+		cmps--;//number of connected components decreases by one if two nodes that are not in same component has been connected
 		
 		
 		///small to large:
@@ -119,14 +161,24 @@ struct DSU {
 		parent[v]=u;
 		sz[u]+=sz[v];
 		
+		
+		//////////////////////////////////
+		nxt[tail[u]]=head[v];
+		tail[u]=tail[v];
+		/////note that head of v doesn't matter anymore
+		
+		
 		//don't forget here to update the information you want to get (if needed) , for ex: max,min,sum,multiplication,etc.....
 		//////////////////////////////////////////////////
 		//////////////////////////////////////////////////
 		
 		
-		cmps--;//number of connected components decreases by one if two nodes that are not in same component has been connected
+		
+		
 		return 1;
 	}
+	
+	
 	
 	
 	
